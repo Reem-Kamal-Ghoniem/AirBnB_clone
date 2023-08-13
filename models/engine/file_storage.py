@@ -41,10 +41,26 @@ class FileStorage:
         If the file doesn’t exist, no exception should be raised)
         """
         from models.base_model import BaseModel
+        from models.user import User
+        from models.state import State
+        from models.review import Review
+        from models.place import Place
+        from models.city import City
+        from models.amenity import Amenity
+
+        classes = {
+            "BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "Review": Review,
+            "Place": Place,
+            "City": City,
+            "Amenity": Amenity,
+        }
 
         try:
             with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
                 for key, value in json.load(f).items():
-                    self.new(BaseModel(**value))
+                    self.new(classes[value["__class__"]](**value))
         except Exception:
             pass

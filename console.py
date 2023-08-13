@@ -2,6 +2,7 @@
 """module containing the console for AirBnB"""
 
 import cmd
+import re
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -142,6 +143,44 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
         else:
             print("** class name missing **")
+
+    def do_count(self, line):
+        """counts number of instances based on class"""
+        counter = 0
+        if line in HBNBCommand.classes:
+            for key, value in HBNBCommand.all_objects.items():
+                if type(value).__name__ == line:
+                    counter += 1
+        print(counter)
+
+    def default(self, line):
+        """use this function to make operations based on class name
+        <class name.op>
+        Usage:
+        <class name>.all()
+        <class name>.count()
+        <class name>.show(<id>)
+        <class name>.destroy(<id>)
+        <class name>.update(<id>, <attribute name>, <attribute value>)
+        """
+        functions = {
+            "all": self.do_all,
+            "count": self.do_count,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+        }
+        line = line.split(".")
+        values = re.findall(r'"(.*?)"', line[1])
+        line[1] = str(line[1].split("(")[0])
+
+        if line[0] in HBNBCommand.classes:
+            if line[1] == "all" or line[1] == "count":
+                functions[line[1]](line[0])
+            elif line[1] == "show" or line[1] == "destroy":
+                functions[line[1]](f"{line[0]} {values[0]}")
+
+        else:
+            print("** class doesn't exist **")
 
 
 if __name__ == "__main__":

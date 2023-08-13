@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """module containing the console for AirBnB"""
 
+import re
 import cmd
 import re
 from models.base_model import BaseModel

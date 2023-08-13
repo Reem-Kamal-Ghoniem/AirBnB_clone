@@ -24,6 +24,8 @@ class BaseModel:
                     else:
                         self.updated_at = \
                             datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                elif key[0] == "id":
+                    self.__dict__[key] = str(value)
                 else:
                     setattr(self, key, value)
 
@@ -43,8 +45,11 @@ class BaseModel:
 
     def to_dict(self):
         """Returns a dictionary"""
-        out_dict = self.__dict__.copy()
-        out_dict['__class__'] = type(self).__name__
-        out_dict['created_at'] = self.created_at.isoformat()
-        out_dict['updated_at'] = self.updated_at.isoformat()
-        return out_dict
+        out = {}
+        for key, value in self.__dict__.items():
+            if key == "created_at" or key == "updated_at":
+                out[key] = value.isoformat()
+            else:
+                out[key] = value
+        out["__class__"] = self.__class__.__name__
+        return out

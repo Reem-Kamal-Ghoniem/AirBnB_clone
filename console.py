@@ -126,7 +126,8 @@ class HBNBCommand(cmd.Cmd):
                         if len(args) > 2:
                             if len(args) > 3:
                                 obj = self.all_objects[obj_key]
-                                setattr(obj, args[2], type(args[2])(args[3]))
+                                value = type(args[2])(args[3].strip('"'))
+                                setattr(obj, args[2], value)
                                 obj.save()
                             else:
                                 print("** value missing **")

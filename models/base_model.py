@@ -13,8 +13,9 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """initiallization of BaseModel"""
         if kwargs:
-            if "__class__" in kwargs:
-                del kwargs["__class__"]
+            for key, value in kwargs.items():
+                if key != "__class__":
+                    setattr(self, key, value)
             for key, value in kwargs.items():
                 if key == 'created_at' or key == 'updated_at':
                     if key == 'created_at':

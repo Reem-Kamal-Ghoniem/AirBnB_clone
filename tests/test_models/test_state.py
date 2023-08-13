@@ -6,6 +6,7 @@ from models.state import State
 
 class test_State(unittest.TestCase):
     """slass test_state for testing state class"""
+
     def test_state_attributes(self):
         """testing values"""
         state = State()

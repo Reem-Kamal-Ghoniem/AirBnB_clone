@@ -5,6 +5,7 @@ from models.base_model import BaseModel
 
 class User(BaseModel):
     """Class representing a User"""
+
     def __init__(self, *args, **kwargs):
         """initialization for the User class"""
         super().__init__(*args, **kwargs)

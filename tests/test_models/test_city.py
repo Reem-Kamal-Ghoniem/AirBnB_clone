@@ -6,6 +6,7 @@ from models.city import City
 
 class test_City(unittest.TestCase):
     """class for testing class city"""
+
     def test_city_attributes(self):
         """testting attributes values"""
         city = City()

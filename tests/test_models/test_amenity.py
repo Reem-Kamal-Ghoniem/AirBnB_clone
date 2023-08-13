@@ -7,6 +7,7 @@ from models.amenity import Amenity
 
 class test_Amenity(unittest.TestCase):
     """class for testing amenity class"""
+
     def test_amenity_attributes(self):
         """testing values"""
         amenity = Amenity()

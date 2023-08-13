@@ -13,9 +13,9 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """initiallization of BaseModel"""
         if kwargs:
-            if "__class__" in kwargs:
-                del kwargs["__class__"]
             for key, value in kwargs.items():
+                if key == '__class__':
+                    continue
                 if key == 'created_at' or key == 'updated_at':
                     if key == 'created_at':
                         self.created_at = \
@@ -23,16 +23,13 @@ class BaseModel:
                     else:
                         self.updated_at = \
                             datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
-                elif key[0] == "id":
-                    self.__dict__[key] = str(value)
                 else:
                     setattr(self, key, value)
-
-                self.id = str(uuid.uuid4())
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+
 
     def __str__(self):
         """returns string representation"""

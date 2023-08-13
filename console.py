@@ -143,6 +143,26 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
+    def default(self, line):
+        functions = {
+            "all": self.do_all,
+            "count": self.do_count,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+        }
+        line = line.split(".")
+        values = re.findall(r'"(.*?)"', line[1])
+        line[1] = str(line[1].split("(")[0])
+
+        if line[0] in HBNBCommand.classes:
+            if line[1] == "all" or line[1] == "count":
+                functions[line[1]](line[0])
+            elif line[1] == "show" or line[1] == "destroy":
+                functions[line[1]](f"{line[0]} {values[0]}")
+
+        else:
+            print(" class doesn't exist ")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

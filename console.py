@@ -108,6 +108,7 @@ class HBNBCommand(cmd.Cmd):
                         my_list.append(value.__str__())
             else:
                 print("** class doesn't exist **")
+                return
         else:
             for key, value in HBNBCommand.all_objects.items():
                 my_list.append(value.__str__())

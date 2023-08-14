@@ -2,10 +2,7 @@
 """module containing unit tests for file storage class"""
 
 import unittest
-
 import os
-
-from click import File
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from models import storage
@@ -30,7 +27,7 @@ class FileStorageTest(unittest.TestCase):
 
     def test_all_2(self):
         """tests all function in FileStorage"""
-        objects = storage._FileStorage__objects  # type: ignore
+        objects = storage._FileStorage__objects
         self.assertEqual(storage.all(), objects)
 
     def test_json_file_exists(self):

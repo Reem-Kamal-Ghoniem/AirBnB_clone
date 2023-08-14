@@ -168,6 +168,7 @@ class HBNBCommand(cmd.Cmd):
             "count": self.do_count,
             "show": self.do_show,
             "destroy": self.do_destroy,
+            "update": self.do_update,
         }
         line = line.split(".")
         values = re.findall(r'"(.*?)"', line[1])
@@ -178,6 +179,9 @@ class HBNBCommand(cmd.Cmd):
                 functions[line[1]](line[0])
             elif line[1] == "show" or line[1] == "destroy":
                 functions[line[1]](f"{line[0]} {values[0]}")
+            elif line[1] == "update":
+                args = f"{line[0]} {values[0]} {values[1]} {values[2]}"
+                functions[line[1]](args)
         else:
             print("** class doesn't exist **")
 

@@ -5,6 +5,8 @@ from hmac import new
 import unittest
 
 import os
+
+from click import File
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from models import storage
@@ -14,6 +16,11 @@ class FileStorageTest(unittest.TestCase):
     """tests for file storage class"""
 
     obj = BaseModel()
+
+    def test_attributes(self):
+        """tests if attributes exist for FileStorage Class"""
+        self.assertEqual(hasattr(FileStorage, "_FileStorage__file_path"), True)
+        self.assertEqual(hasattr(FileStorage, "_FileStorage__objects"), True)
 
     def test_all(self):
         """tests all function in FileStorage"""
@@ -48,5 +55,4 @@ class FileStorageTest(unittest.TestCase):
         self.assertEqual(objs == FileStorage._FileStorage__objects, False)
         storage.reload()
         key = f"{type(FileStorageTest.obj).__name__}.{FileStorageTest.obj.id}"
-        print(key)
         self.assertEqual(key in FileStorage._FileStorage__objects, True)

@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """module containing unit tests for file storage class"""
 
+from hmac import new
 import unittest
 
 import os
@@ -23,9 +24,29 @@ class FileStorageTest(unittest.TestCase):
 
     def test_all_2(self):
         """tests all function in FileStorage"""
-        self.assertEqual(storage.all(), storage._FileStorage__objects)
+        objects = storage._FileStorage__objects  # type: ignore
+        self.assertEqual(storage.all(), objects)
 
     def test_json_file_exists(self):
         """tests if save function creates json file"""
         FileStorageTest.obj.save()
         self.assertEqual(os.path.exists("file.json"), True)
+
+    def test_new(self):
+        """tests new function"""
+        new_model = BaseModel()
+        key = f"{type(new_model).__name__}.{new_model.id}"
+        objs = storage.all()
+        self.assertEqual(key in objs, True)
+
+    def test_reload(self):
+        """test reload function"""
+        FileStorageTest.obj.save()
+        self.assertEqual(os.path.exists("file.json"), True)
+        objs = storage.all()
+        FileStorage._FileStorage__objects = {}  # type: ignore
+        self.assertEqual(objs == FileStorage._FileStorage__objects, False)
+        storage.reload()
+        key = f"{type(FileStorageTest.obj).__name__}.{FileStorageTest.obj.id}"
+        print(key)
+        self.assertEqual(key in FileStorage._FileStorage__objects, True)

@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """module containing unit tests for file storage class"""
 
-from hmac import new
 import unittest
 
 import os

@@ -1,0 +1,15 @@
+.head {
+    background-color: white;
+    border: #484848;
+    height: 70px;
+    width: 100%;
+    border-bottom: 1px solid #CCCCCC;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.logo {
+    vertical-align: middle;
+    height: 70px;
+}
